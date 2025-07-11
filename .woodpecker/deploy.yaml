@@ -42,7 +42,7 @@ steps:
     image: kokuwaio/dockerhub-metadata
     settings:
       repository: kokuwaio/renovate-approve-bot
-      description-short: Renovate approve bot for Forgejo/Gitea.
+      description-short: Bot to approve pull requests made by Renovate in Forgejo/Gitea.
       categories: [developer-tools, integration-and-delivery]
       username: {from_secret: dockerhub_username}
       password: {from_secret: dockerhub_password}

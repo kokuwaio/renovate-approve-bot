@@ -1,6 +1,6 @@
-# Renovate approve bot for Forgejo/Gitea
+# Renovate approve bot
 
-This bot approves PRs created by [Renovate](https://docs.renovatebot.com/).
+Bot to approve pull requests made by [Renovate](https://docs.renovatebot.com/) in Forgejo/Gitea.
 
 [![pulls](https://img.shields.io/docker/pulls/kokuwaio/renovate-approve-bot)](https://hub.docker.com/r/kokuwaio/renovate-approve-bot)
 [![size](https://img.shields.io/docker/image-size/kokuwaio/renovate-approve-bot)](https://hub.docker.com/r/kokuwaio/renovate-approve-bot)
@@ -12,7 +12,7 @@ This bot approves PRs created by [Renovate](https://docs.renovatebot.com/).
 ## Configuration
 
 ```text
-Renovate approve bot for Forgejo/Gitea.
+Bot to approve pull requests made by Renovate in Forgejo/Gitea.
 
 Usage: 
 
@@ -21,9 +21,9 @@ Options:
           Host of forge
       --token-file <token-file>
           File with forgen token
-      --repository-topic <repository-topic>
+      --repository-topic <REPOSITORY_TOPIC>
           Topic for repository search [default: renovate]
-      --renovate-user <renovate-user>
+      --renovate-user <RENOVATE_USER>
           Username of renovate bot to identity pull requests to handle [default: renovate]
   -h, --help
           Print help

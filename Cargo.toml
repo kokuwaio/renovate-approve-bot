@@ -1,11 +1,11 @@
 [package]
 name = "renovate-approve-bot"
-description = "Renovate approve bot for Forgejo/Gitea."
+description = "Bot to approve pull requests made by Renovate in Forgejo/Gitea."
 authors = ["Stephan Schnabel <stephan@schnabel.org>"]
 keywords = ["forgejo", "gitea", "renovate"]
 categories = ["command-line-utilities"]
 repository = "https://git.kokuwa.io/kokuwaio/renovate-approve-bot"
-version = "0.0.1"
+version = "0.0.2"
 license = "EUPL-1.2"
 edition = "2024"
 rust-version = "1.88.0"

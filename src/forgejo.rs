@@ -68,7 +68,8 @@ impl ForgejoClient {
     }
 
     pub fn approve_pull_request(&self, repository: &str, number: &u16) {
-        let response = self.client
+        let response = self
+            .client
             .post(format!(
                 "{}/api/v1/repos/{}/pulls/{}/reviews",
                 self.host, repository, number
