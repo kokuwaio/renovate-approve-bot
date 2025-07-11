@@ -14,5 +14,10 @@ rust-version = "1.88.0"
 name = "renovate-approve-bot"
 path = "src/main.rs"
 
+[dependencies]
+clap = { version = "4.5.40", default-features = false, features = ["std", "help", "derive"] }
+log = "0.4.27"
+simple_logger =  { version ="5.0.0", default-features = false, features = ["colors"] }
+
 [profile.release]
 strip = true

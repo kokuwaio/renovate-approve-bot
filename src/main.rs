@@ -1,5 +1,15 @@
+mod configuration;
+
+use crate::configuration::Configuration;
+use clap::Parser;
+use simple_logger::SimpleLogger;
+
 fn main() {
-    let pattern = std::env::args().nth(1).expect("no pattern given");
-    let path = std::env::args().nth(2).expect("no path given");
-    println!("pattern: {:?}, path: {:?}", pattern, path)
+    SimpleLogger::new().init().unwrap();
+
+    let configuration = Configuration::parse();
+    let token = std::fs::read_to_string(&configuration.token_file).unwrap();
+
+    log::info!("Host:  {}", configuration.host);
+    log::info!("Token: {}", token);
 }

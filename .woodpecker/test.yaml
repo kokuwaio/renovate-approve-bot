@@ -14,7 +14,12 @@ labels:
 
 steps:
 
-  run:
+  help:
     image: kokuwaio/renovate-approve-bot
     pull: true
-    entrypoint: [/renovate-approve-bot, foo, bar]
+    entrypoint: [/renovate-approve-bot, --help]
+
+  version:
+    image: kokuwaio/renovate-approve-bot
+    pull: true
+    entrypoint: [/renovate-approve-bot, --version]
