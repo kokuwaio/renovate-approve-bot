@@ -1,0 +1,20 @@
+when:
+  instance: ci.kokuwa.io
+  repo: kokuwaio/renovate-approve-bot
+  event: [manual, push]
+  branch: main
+  path: [.woodpecker/deploy.yaml, README.md, Dockerfile, Cargo.toml, Cargo.lock, src/**]
+
+depends_on: [deploy]
+skip_clone: true
+matrix:
+  PLATFORM: [amd64, arm64]
+labels:
+  platform: linux/${PLATFORM}
+
+steps:
+
+  run:
+    image: kokuwaio/renovate-approve-bot
+    pull: true
+    entrypoint: [/renovate-approve-bot, foo, bar]
