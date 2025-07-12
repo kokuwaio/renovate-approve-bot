@@ -6,15 +6,16 @@ use crate::forgejo::ForgejoClient;
 use crate::forgejo::PullRequest;
 use crate::forgejo::Repository;
 use clap::Parser;
+use env_logger::Builder;
 use log::debug;
 use log::info;
+use std::io::Write;
+use std::time::SystemTime;
+use std::time::UNIX_EPOCH;
 
 fn main() {
     let configuration = Configuration::parse();
-
-    env_logger::builder()
-        .filter_level(configuration.log_level)
-        .init();
+    init_logging(&configuration);
 
     let token = std::fs::read_to_string(&configuration.token_file).unwrap();
     let client = ForgejoClient::new(configuration.host.clone(), token);
@@ -51,6 +52,27 @@ fn main() {
             handle_pull_request(&client, &repository, &pull_request);
         }
     }
+}
+
+fn init_logging(configuration: &Configuration) {
+    let mut builder = Builder::new();
+    builder.filter_level(configuration.log_level);
+    if configuration.log_format == "logfmt" {
+        builder.format(|buf, record| {
+            writeln!(
+                buf,
+                "ts={} log={} lvl={} msg=\"{}\"",
+                SystemTime::now()
+                    .duration_since(UNIX_EPOCH)
+                    .unwrap()
+                    .as_millis(),
+                record.metadata().target(),
+                record.level(),
+                record.args()
+            )
+        });
+    }
+    builder.init();
 }
 
 fn handle_pull_request(

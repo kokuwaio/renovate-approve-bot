@@ -27,6 +27,8 @@ Options:
           Username of renovate bot to identity pull requests to handle [default: renovate]
       --log-level <LOG_LEVEL>
           Log level [default: Info]
+      --log-format <LOG_FORMAT>
+          Log format [default: logfmt] [possible values: text, logfmt]
   -h, --help
           Print help
   -V, --version

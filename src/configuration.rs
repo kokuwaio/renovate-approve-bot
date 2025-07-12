@@ -24,4 +24,8 @@ pub struct Configuration {
     /// Log level
     #[arg(long, default_value = "Info")]
     pub log_level: LevelFilter,
+
+    /// Log format
+    #[arg(long, default_value ="logfmt",  value_parser = clap::builder::PossibleValuesParser::new(["text", "logfmt"]))]
+    pub log_format: String,
 }
