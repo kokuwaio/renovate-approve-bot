@@ -1,4 +1,5 @@
 use clap::Parser;
+use log::LevelFilter;
 
 /// Renovate approve bot for Forgejo/Gitea.
 #[derive(Parser)]
@@ -19,4 +20,8 @@ pub struct Configuration {
     /// Username of renovate bot to identity pull requests to handle
     #[arg(long, default_value = "renovate")]
     pub renovate_user: String,
+
+    /// Log level
+    #[arg(long, default_value = "Info")]
+    pub log_level: LevelFilter,
 }

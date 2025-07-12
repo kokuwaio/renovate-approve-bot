@@ -8,12 +8,14 @@ use crate::forgejo::Repository;
 use clap::Parser;
 use log::debug;
 use log::info;
-use simple_logger::SimpleLogger;
 
 fn main() {
-    SimpleLogger::new().init().unwrap();
-
     let configuration = Configuration::parse();
+
+    env_logger::builder()
+        .filter_level(configuration.log_level)
+        .init();
+
     let token = std::fs::read_to_string(&configuration.token_file).unwrap();
     let client = ForgejoClient::new(configuration.host.clone(), token);
     let version = client.get_version().version;

@@ -25,6 +25,8 @@ Options:
           Topic for repository search [default: renovate]
       --renovate-user <RENOVATE_USER>
           Username of renovate bot to identity pull requests to handle [default: renovate]
+      --log-level <LOG_LEVEL>
+          Log level [default: Info]
   -h, --help
           Print help
   -V, --version
