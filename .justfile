@@ -20,12 +20,12 @@ run TOKEN_FILE:
 
 # Build image with local docker daemon and run.
 docker TOKEN_FILE:
-    docker build . --tag=kokuwaio/kokuwaio/renovate-approve-bot:dev
+    docker build . --tag=kokuwaio/kokuwaio/renovate-approve-bot:dev --build-arg=RUSTUP_UPDATE_ROOT --build-arg=RUSTUP_DIST_SERVER
     docker run --rm -it --read-only --user=1000:1000 --volume={{TOKEN_FILE}}:/token:ro kokuwaio/kokuwaio/renovate-approve-bot:dev --host=https://git.kokuwa.io --token-file=/token
 
 # Inspect image layers with `dive`.
 dive TARGET="":
-	dive build . --target={{TARGET}}
+	dive build . --target={{TARGET}} --build-arg=RUSTUP_UPDATE_ROOT --build-arg=RUSTUP_DIST_SERVER
 
 # Create sbom from Cargo.lock.
 sbom:

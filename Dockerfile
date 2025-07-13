@@ -9,6 +9,9 @@ RUN --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
 	apt-get -qq update && \
 	apt-get -qq install --yes --no-install-recommends musl-tools=* musl-dev=*
 
+ARG RUSTUP_DIST_SERVER
+ARG RUSTUP_UPDATE_ROOT
+
 RUN [[ $(uname -m) == x86_64 ]] && export TARGET=x86_64-unknown-linux-musl; \
 	[[ $(uname -m) == aarch64 ]] && export TARGET=aarch64-unknown-linux-musl; \
 	[[ -z ${TARGET:-} ]] && echo "Unknown arch: $(uname -m)" && exit 1; \
