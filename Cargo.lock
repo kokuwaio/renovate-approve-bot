@@ -780,7 +780,7 @@ dependencies = [
 
 [[package]]
 name = "renovate-approve-bot"
-version = "0.0.2"
+version = "0.0.3-dev"
 dependencies = [
  "clap",
  "env_logger",
