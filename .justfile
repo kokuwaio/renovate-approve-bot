@@ -26,3 +26,12 @@ docker TOKEN_FILE:
 # Inspect image layers with `dive`.
 dive TARGET="":
 	dive build . --target={{TARGET}}
+
+# Create sbom from Cargo.lock.
+sbom:
+	docker run --rm --user=$(id -u):$(id -g) --volume=$PWD:$PWD --workdir=$PWD ghcr.io/cyclonedx/cdxgen-debian-rust:v11.4.3 --fail-on-error --author="$(git config --get user.name) <$(git config --get user.email)>" --output sbom.json
+
+# Create sbom from Cargo.lock and push to DependencyTrack.
+dtrack DTRACK_API_KEY:
+	docker run --rm --user=$(id -u):$(id -g) --volume=$PWD:$PWD --workdir=$PWD ghcr.io/cyclonedx/cdxgen-debian-rust:v11.4.3 --fail-on-error --author="$(git config --get user.name) <$(git config --get user.email)>" --server-url=https://dtrack.kokuwa.io --api-key={{DTRACK_API_KEY}} --project-id=594d7129-9099-4f53-a284-8eccbbf35d2a
+	
