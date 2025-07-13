@@ -34,3 +34,43 @@ Options:
   -V, --version
           Print version
 ```
+
+## Usage as Kubernetes CronJob
+
+```yaml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: renovate-approve-bot
+spec:
+  schedule: 10 * * * *
+  jobTemplate:
+    metadata:
+      labels:
+        app.kubernetes.io/name: renovate-approve-bot
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: renovate-approve-bot
+        spec:
+          containers:
+            - name: renovate-approve-bot
+              image: kokuwaio/renovate-approve-bot:0.0.2
+              imagePullPolicy: IfNotPresent
+              args:
+                - --host=https://git.example.org # or e.g. http://forgejo.dev.svc.cluster.local
+                - --token-file=/run/secrets/token
+                - --log-level=DEBUG
+                - --log-format=logfmt
+              volumeMounts:
+                - name: token
+                  mountPath: /run/secrets/token
+                  subPath: token
+                  readOnly: true
+          volumes:
+            - name: token
+              secret:
+                secretName: renovate-approve-bot
+```
