@@ -1,4 +1,4 @@
-FROM rust:1.88.0-slim@sha256:094f072de55b061adcd5451f265ea5b41fb484475bd6d114742d990850845284 AS build
+FROM rust:1.88.0-slim@sha256:4679aa0a88781517cbc33adeea4057d8a740eb4a07c43f3aaa63c26e35e9a65c AS build
 SHELL ["/usr/bin/bash", "-u", "-e", "-o", "pipefail", "-c"]
 WORKDIR /build
 
