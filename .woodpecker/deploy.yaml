@@ -54,7 +54,7 @@ steps:
 
   sbom:
     depends_on: [image]
-    image: ghcr.io/cyclonedx/cdxgen-debian-rust:v11.7.0
+    image: ghcr.io/cyclonedx/cdxgen-debian-rust:v11.8.0
     commands: node /opt/cdxgen/bin/cdxgen.js --fail-on-error --author="$GIT_USER_NAME <$GIT_USER_EMAIL>" --server-url=https://dtrack.kokuwa.io --api-key=$DTRACK_API_KEY --project-id=594d7129-9099-4f53-a284-8eccbbf35d2a
     environment:
       DTRACK_API_KEY: {from_secret: dtrack_api_key}
