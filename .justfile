@@ -19,14 +19,14 @@ run TOKEN_FILE:
 	./target/debug/renovate-approve-bot --host=https://git.kokuwa.io --token-file {{TOKEN_FILE}}
 
 # Build image with local docker daemon and run.
-docker:
-	docker buildx build . --platform=linux/amd64,linux/arm64 --build-arg=RUSTUP_UPDATE_ROOT --build-arg=RUSTUP_DIST_SERVER
+docker TOKEN_FILE:
+	docker buildx build . --platform=linux/arm64 --build-arg=RUSTUP_UPDATE_ROOT --build-arg=RUSTUP_DIST_SERVER
 	docker buildx build . --tag=kokuwaio/renovate-approve-bot:dev --load --build-arg=RUSTUP_UPDATE_ROOT --build-arg=RUSTUP_DIST_SERVER
 	docker run --rm -it --read-only --user=1000:1000 --volume={{TOKEN_FILE}}:/token:ro kokuwaio/renovate-approve-bot:dev --host=https://git.kokuwa.io --token-file=/token
 
 # Build image with local docker daemon.
 @build:
-	docker buildx build . --build-arg=RUSTUP_UPDATE_ROOT --build-arg=RUSTUP_DIST_SERVER --platform=linux/amd64,linux/arm64
+	docker buildx build . --build-arg=RUSTUP_UPDATE_ROOT --build-arg=RUSTUP_DIST_SERVER --platform=linux/arm64
 
 # Print image size.
 size:
