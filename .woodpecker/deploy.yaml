@@ -8,7 +8,7 @@ when:
 steps:
 
   image:
-    image: kokuwaio/buildctl:v0.25.0
+    image: kokuwaio/buildctl:v0.25.1
     settings:
       name:
         - registry.kokuwa.io/kokuwaio/renovate-approve-bot:dev
