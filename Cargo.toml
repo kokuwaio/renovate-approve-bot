@@ -9,7 +9,7 @@ repository = "https://git.kokuwa.io/kokuwaio/renovate-approve-bot"
 version = "0.0.3-dev"
 license = "EUPL-1.2"
 edition = "2024"
-rust-version = "1.91.0"
+rust-version = "1.91.1"
 
 [[bin]]
 name = "renovate-approve-bot"
