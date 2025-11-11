@@ -1,4 +1,4 @@
-FROM rust:1.91.1-slim-bookworm@sha256:769572037141f5a15e2e4df84a9adeda1886b8f5f634199913bbef4526e26b46 AS build
+FROM rust:1.91.1-slim-bookworm@sha256:ea63277ad2e4d89ea2e2b170ab0bde8813ed4809f66afa3db596d1ccf90b5903 AS build
 SHELL ["/usr/bin/bash", "-u", "-e", "-o", "pipefail", "-c"]
 WORKDIR /build
 
