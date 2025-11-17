@@ -5,7 +5,7 @@ when:
 steps:
 
   image:
-    image: kokuwaio/buildctl:v0.25.2
+    image: kokuwaio/buildctl:v0.26.0
     depends_on: []
     settings:
       platform: [linux/amd64, linux/arm64]
