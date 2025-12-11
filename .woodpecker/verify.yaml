@@ -14,7 +14,7 @@ steps:
         RUSTUP_UPDATE_ROOT: ${RUSTUP_UPDATE_ROOT}
 
   rust:
-    image: rust:1.91.1-slim
+    image: rust:1.92.0-slim
     depends_on: []
     commands: [rustup component add rustfmt, cargo fmt --all -- --check]
     when: [path: {exclude: [Dockerfile]}]
