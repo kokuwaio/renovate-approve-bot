@@ -1,6 +1,19 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": ["kokuwaio/renovate-config"],
+	"packageRules": [
+		{
+			"description": "pin in cargo.lock",
+			"matchManagers": ["cargo"],
+			"rangeStrategy": "pin"
+		},{
+			"description": "no need to update rust to latest via renovate",
+			"matchManagers": ["docker"],
+			"matchPackageNames": ["rust"],
+			"matchUpdateTypes": ["major", "minor"],
+			"enabled": false
+		}
+	],
 	"customManagers": [
 		{
 			"customType": "regex",
