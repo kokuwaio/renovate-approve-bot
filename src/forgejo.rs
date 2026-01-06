@@ -67,6 +67,15 @@ impl ForgejoClient {
         ))
     }
 
+    pub fn get_status(&self, repository: &str, reference: &str) -> CombinedStatus {
+        self.get(format!(
+            "{}/api/v1/repos/{}/commits/{}/status",
+            self.host,
+            repository,
+            self.encode(reference)
+        ))
+    }
+
     pub fn approve_pull_request(&self, repository: &str, number: &u16) {
         let response = self
             .client
@@ -85,6 +94,10 @@ impl ForgejoClient {
         let response = self.client.get(url).send().unwrap();
         assert_eq!(response.status(), 200);
         response.json::<T>().unwrap()
+    }
+
+    fn encode(&self, value: &str) -> String {
+        return url::form_urlencoded::byte_serialize(value.as_bytes()).collect();
     }
 }
 
@@ -117,11 +130,30 @@ pub struct Repository {
 pub struct PullRequest {
     /// Repo specific ID displayed in Forge
     pub number: u16,
+    pub head: PRBranchInfo,
 }
+
+#[derive(Deserialize)]
+pub struct PRBranchInfo {
+    #[serde(rename = "ref")]
+    pub reference: String,
+}
+
 #[derive(Deserialize)]
 pub struct PullRequestReview {
     pub id: u32,
     pub user: User,
     pub state: String,
     pub dismissed: bool,
+}
+
+#[derive(Deserialize)]
+pub struct CombinedStatus {
+    pub statuses: Vec<CommitStatus>,
+}
+
+#[derive(Deserialize)]
+pub struct CommitStatus {
+    pub status: String,
+    pub context: String,
 }

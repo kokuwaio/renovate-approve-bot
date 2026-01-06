@@ -725,6 +725,7 @@ dependencies = [
  "log",
  "reqwest",
  "serde",
+ "url",
 ]
 
 [[package]]
