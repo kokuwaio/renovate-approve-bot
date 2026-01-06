@@ -1,4 +1,4 @@
-FROM rust:1.92.0-slim-bookworm@sha256:376e6785918280aa68bef2d8d7b0204b58dfd486f370419023363c6e8cc09ec3 AS build
+FROM rust:1.92.0-slim-trixie@sha256:6cff8a33b03d328aa58d00dedda6a3c5bbee4b41e21533932bffd90d7d58f9c4 AS build
 SHELL ["/usr/bin/bash", "-u", "-e", "-o", "pipefail", "-c"]
 WORKDIR /build
 
@@ -7,7 +7,7 @@ RUN --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
 	--mount=type=tmpfs,target=/var/cache \
 	--mount=type=tmpfs,target=/var/log \
 	apt-get -qq update && \
-	apt-get -qq install --yes --no-install-recommends musl-tools=* musl-dev=*
+	apt-get -qq install --yes --no-install-recommends musl-dev=*
 
 ARG TARGETARCH
 ARG RUSTUP_DIST_SERVER

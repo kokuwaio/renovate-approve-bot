@@ -16,5 +16,5 @@ steps:
   rust:
     image: rust:1.92.0-slim-bookworm
     depends_on: []
-    commands: [rustup component add rustfmt, cargo fmt --all -- --check]
+    commands: [rustup component add rustfmt, cargo fmt --all --check]
     when: [path: {exclude: [Dockerfile]}]
