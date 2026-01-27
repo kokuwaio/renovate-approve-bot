@@ -1,4 +1,4 @@
-FROM rust:1.92.0-slim-trixie@sha256:bf3368a992915f128293ac76917ab6e561e4dda883273c8f5c9f6f8ea37a378e AS build
+FROM rust:1.93.0-slim-trixie@sha256:df6ca8f96d338697ccdbe3ccac57a85d2172e03a2429c2d243e74f3bb83ba2f5 AS build
 SHELL ["/usr/bin/bash", "-u", "-e", "-o", "pipefail", "-c"]
 WORKDIR /build
 
