@@ -59,9 +59,9 @@ dive TARGET="":
 # Create sbom from Cargo.lock.
 [group('dtrack')]
 sbom:
-    docker run --rm --user=$(id -u):$(id -g) --volume=$PWD:$PWD --workdir=$PWD ghcr.io/cyclonedx/cdxgen-debian-rust:v12.0.0 --fail-on-error --author="$(git config --get user.name) <$(git config --get user.email)>"
+    docker run --rm --user=$(id -u):$(id -g) --volume=$PWD:$PWD --workdir=$PWD ghcr.io/cyclonedx/cdxgen-debian-rust:v12.1.5 --fail-on-error --author="$(git config --get user.name) <$(git config --get user.email)>"
 
 # Create sbom from Cargo.lock and push to DependencyTrack.
 [group('dtrack')]
 dtrack DTRACK_API_KEY_FILE:
-    docker run --rm --user=$(id -u):$(id -g) --volume=$PWD:$PWD --workdir=$PWD ghcr.io/cyclonedx/cdxgen-debian-rust:v12.0.0 --fail-on-error --author="$(git config --get user.name) <$(git config --get user.email)>" --server-url=https://dtrack.kokuwa.io --api-key=$(cat {{ DTRACK_API_KEY_FILE }}) --project-id=594d7129-9099-4f53-a284-8eccbbf35d2a
+    docker run --rm --user=$(id -u):$(id -g) --volume=$PWD:$PWD --workdir=$PWD ghcr.io/cyclonedx/cdxgen-debian-rust:v12.1.5 --fail-on-error --author="$(git config --get user.name) <$(git config --get user.email)>" --server-url=https://dtrack.kokuwa.io --api-key=$(cat {{ DTRACK_API_KEY_FILE }}) --project-id=594d7129-9099-4f53-a284-8eccbbf35d2a
