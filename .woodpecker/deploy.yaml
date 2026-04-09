@@ -11,9 +11,9 @@ steps:
     image: kokuwaio/buildctl:v0.29.0
     settings:
       name:
-        - registry.kokuwa.io/kokuwaio/renovate-approve-bot:0.0.3
-        - docker.io/kokuwaio/renovate-approve-bot:0.0.3
-        - ghcr.io/kokuwaio/renovate-approve-bot:0.0.3
+        - registry.kokuwa.io/kokuwaio/renovate-approve-bot:dev
+        - docker.io/kokuwaio/renovate-approve-bot:dev
+        - ghcr.io/kokuwaio/renovate-approve-bot:dev
       platform: [linux/amd64, linux/arm64]
       build-args:
         RUSTUP_DIST_SERVER: ${RUSTUP_DIST_SERVER}
@@ -38,7 +38,7 @@ steps:
         org.opencontainers.image.vendor: kokuwa.io
         org.opencontainers.image.licenses: EUPL-1.2
         org.opencontainers.image.ref.name: kokuwaio/renovate-approve-bot
-        org.opencontainers.image.version: 0.0.3
+        org.opencontainers.image.version: dev
     when: [path: {exclude: [README.md]}]
 
   dockerhub:

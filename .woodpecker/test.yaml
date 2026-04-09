@@ -15,11 +15,11 @@ labels:
 steps:
 
   help:
-    image: kokuwaio/renovate-approve-bot:0.0.3
+    image: kokuwaio/renovate-approve-bot
     pull: true
     entrypoint: [/renovate-approve-bot, --help]
 
   version:
-    image: kokuwaio/renovate-approve-bot:0.0.3
+    image: kokuwaio/renovate-approve-bot
     pull: true
     entrypoint: [/renovate-approve-bot, --version]
