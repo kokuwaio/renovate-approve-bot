@@ -1,4 +1,4 @@
-FROM rust:1.92.0-slim-bookworm@sha256:376e6785918280aa68bef2d8d7b0204b58dfd486f370419023363c6e8cc09ec3 AS build
+FROM docker.io/library/rust:1.94.1-slim-trixie@sha256:a08d20a404f947ed358dfb63d1ee7e0b88ecad3c45ba9682ccbf2cb09c98acca AS build
 SHELL ["/usr/bin/bash", "-u", "-e", "-o", "pipefail", "-c"]
 WORKDIR /build
 
@@ -7,29 +7,29 @@ RUN --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
 	--mount=type=tmpfs,target=/var/cache \
 	--mount=type=tmpfs,target=/var/log \
 	apt-get -qq update && \
-	apt-get -qq install --yes --no-install-recommends musl-tools=* musl-dev=*
+	apt-get -qq install --yes --no-install-recommends musl-tools=*
 
 ARG TARGETARCH
 ARG RUSTUP_DIST_SERVER
 ARG RUSTUP_UPDATE_ROOT
 
-RUN [[ $TARGETARCH == amd64 ]] && export ARCH=x86_64-unknown-linux-musl; \
-	[[ $TARGETARCH == arm64 ]] && export ARCH=aarch64-unknown-linux-musl; \
+RUN [[ $TARGETARCH == amd64 ]] && export ARCH=x86_64; \
+	[[ $TARGETARCH == arm64 ]] && export ARCH=aarch64; \
 	[[ -z ${ARCH:-} ]] && echo "Unknown arch: $TARGETARCH" && exit 1; \
-	rustup target add "$ARCH" && \
-	mkdir .cargo && echo -e "[build]\ntarget = \"$ARCH\"\n\n[target.aarch64-unknown-linux-musl]\nlinker = \"aarch64-linux-gnu-gcc\"" > .cargo/config.toml
+	rustup target add "$ARCH-unknown-linux-musl" && \
+	mkdir .cargo && echo -e "[build]\ntarget = \"$ARCH-unknown-linux-musl\"\n\n[target.$ARCH-unknown-linux-musl]\nlinker = \"$ARCH-linux-gnu-gcc\"" > .cargo/config.toml
 
 COPY Cargo.lock Cargo.toml /build/
-RUN --mount=type=cache,target=/build/target,sharing=locked \
-	--mount=type=cache,target=/usr/local/cargo/registry \
+RUN --mount=type=cache,target=/build/target,id=$TARGETARCH-target,sharing=locked \
+	--mount=type=cache,target=/usr/local/cargo/registry,id=$TARGETARCH-registry \
 	mkdir src && touch src/lib.rs && cargo build --locked --release --lib && rm -rf src
 
 COPY src /build/src
-RUN --mount=type=cache,target=/build/target,sharing=locked \
-	--mount=type=cache,target=/usr/local/cargo/registry \
+RUN --mount=type=cache,target=/build/target,id=$TARGETARCH-target,sharing=locked \
+	--mount=type=cache,target=/usr/local/cargo/registry,id=$TARGETARCH-registry \
 	cargo install --locked --bin=renovate-approve-bot --path .
 
 FROM scratch
 COPY --chmod=555 --from=build /usr/local/cargo/bin/renovate-approve-bot /renovate-approve-bot
 ENTRYPOINT ["/renovate-approve-bot"]
-USER 1000:1000
+USER 65354:65354

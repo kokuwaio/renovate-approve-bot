@@ -1,6 +1,13 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": ["kokuwaio/renovate-config"],
+	"packageRules": [
+		{
+			"description": "pin in cargo.lock",
+			"matchManagers": ["cargo"],
+			"rangeStrategy": "pin"
+		}
+	],
 	"customManagers": [
 		{
 			"customType": "regex",

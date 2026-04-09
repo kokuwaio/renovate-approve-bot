@@ -9,18 +9,18 @@ repository = "https://git.kokuwa.io/kokuwaio/renovate-approve-bot"
 version = "0.0.3-dev"
 license = "EUPL-1.2"
 edition = "2024"
-rust-version = "1.92.0"
+rust-version = "1.87.0"
 
 [[bin]]
 name = "renovate-approve-bot"
 path = "src/main.rs"
 
 [dependencies]
-clap = { version = "4.5.40", default-features = false, features = ["std", "help", "derive"] }
-log = "0.4.27"
-env_logger =  { version ="0.11.8", default-features = false, features = ["auto-color"] }
-reqwest = { version = "0.12.22", default-features = false, features = ["json", "blocking", "rustls-tls"] }
-serde = { version = "1.0.215", features = ["derive"] }
+clap = { version = "=4.6.0", default-features = false, features = ["std", "help", "derive"] }
+log = "=0.4.29"
+env_logger =  { version ="=0.11.10", default-features = false, features = ["auto-color"] }
+reqwest = { version = "=0.12.28", default-features = false, features = ["json", "blocking", "rustls-tls"] }
+serde = { version = "=1.0.228", features = ["derive"] }
 
 [profile.release]
 strip = true

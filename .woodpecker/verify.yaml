@@ -5,16 +5,26 @@ when:
 steps:
 
   image:
-    image: kokuwaio/buildctl:v0.26.3
+    image: kokuwaio/buildctl:v0.29.0
     depends_on: []
     settings:
+      name: registry.kokuwa.io/kokuwaio/renovate-approve-bot:ci-${CI_PIPELINE_NUMBER}
       platform: [linux/amd64, linux/arm64]
       build-args:
         RUSTUP_DIST_SERVER: ${RUSTUP_DIST_SERVER}
         RUSTUP_UPDATE_ROOT: ${RUSTUP_UPDATE_ROOT}
+      auth:
+        registry.kokuwa.io:
+          username: {from_secret: kokuwa_io_username}
+          password: {from_secret: kokuwa_io_password}
+
+  test:
+    image: registry.kokuwa.io/kokuwaio/renovate-approve-bot:ci-${CI_PIPELINE_NUMBER}
+    depends_on: [image]
+    entrypoint: [/renovate-approve-bot, --help]
 
   rust:
     image: rust:1.92.0-slim
     depends_on: []
-    commands: [rustup component add rustfmt, cargo fmt --all -- --check]
+    commands: [rustup component add rustfmt, cargo fmt --all --check]
     when: [path: {exclude: [Dockerfile]}]
