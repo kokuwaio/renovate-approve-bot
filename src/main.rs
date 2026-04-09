@@ -105,6 +105,28 @@ fn handle_pull_request(
         }
     }
 
+    let status = client.get_status(&repository.full_name, &pull_request.head.reference);
+    if status.statuses.len() == 0 {
+        debug!(
+            "{}#{} has no status",
+            repository.full_name, pull_request.number
+        );
+        return;
+    }
+    for status in status.statuses {
+        debug!(
+            "{}#{} status {} was {}",
+            repository.full_name, pull_request.number, status.context, status.status
+        );
+        if status.status != "success" {
+            debug!(
+                "{}#{} ignored because of non success status",
+                repository.full_name, pull_request.number
+            );
+            return;
+        }
+    }
+
     client.approve_pull_request(&repository.full_name, &pull_request.number);
     info!("{}#{} approved", repository.full_name, pull_request.number);
 }
