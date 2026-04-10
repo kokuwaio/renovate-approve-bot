@@ -1,3 +1,4 @@
+use reqwest::Certificate;
 use reqwest::blocking::Client;
 use reqwest::header::ACCEPT;
 use reqwest::header::AUTHORIZATION;
@@ -20,7 +21,7 @@ pub struct ForgejoClient {
 }
 
 impl ForgejoClient {
-    pub fn new(host: String, token: String) -> ForgejoClient {
+    pub fn new(certs: Vec<Certificate>, host: String, token: String) -> ForgejoClient {
         let mut authorization = HeaderValue::from_str(&format!("token {}", token.trim())).unwrap();
         authorization.set_sensitive(true);
 
@@ -29,6 +30,7 @@ impl ForgejoClient {
         headers.insert(ACCEPT, HeaderValue::from_static("application/json"));
 
         let client = Client::builder()
+            .tls_certs_merge(certs)
             .timeout(Duration::from_secs(10))
             .user_agent(APP_USER_AGENT)
             .default_headers(headers)

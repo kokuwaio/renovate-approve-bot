@@ -9,6 +9,7 @@ use clap::Parser;
 use env_logger::Builder;
 use log::debug;
 use log::info;
+use reqwest::Certificate;
 use std::io::Write;
 use std::time::SystemTime;
 use std::time::UNIX_EPOCH;
@@ -17,8 +18,17 @@ fn main() {
     let configuration = Configuration::parse();
     init_logging(&configuration);
 
+    rustls::crypto::ring::default_provider()
+        .install_default()
+        .expect("Failed to install rustls crypto provider");
+    let certs: Vec<Certificate> = (webpki_root_certs::TLS_SERVER_ROOT_CERTS)
+        .iter()
+        .map(|root| Certificate::from_der(root).unwrap())
+        .collect::<Vec<_>>();
+    debug!("Loaded {} certs.", certs.len());
+
     let token = std::fs::read_to_string(&configuration.token_file).unwrap();
-    let client = ForgejoClient::new(configuration.host.clone(), token);
+    let client = ForgejoClient::new(certs, configuration.host.clone(), token);
     let version = client.get_version().version;
     let username = client.get_authenticated_user().username;
     info!(
