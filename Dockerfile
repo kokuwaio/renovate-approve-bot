@@ -12,6 +12,7 @@ RUN --mount=type=cache,target=/var/lib/apt/lists,sharing=locked,id=apt-$TARGETAR
 
 ARG RUSTUP_DIST_SERVER
 ARG RUSTUP_UPDATE_ROOT
+# hadolint ignore=SC3010,SC3037
 RUN [[ $TARGETARCH == amd64 ]] && export ARCH=x86_64; \
 	[[ $TARGETARCH == arm64 ]] && export ARCH=aarch64; \
 	[[ -z ${ARCH:-} ]] && echo "Unknown arch: $TARGETARCH" && exit 1; \
