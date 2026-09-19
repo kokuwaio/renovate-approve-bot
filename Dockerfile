@@ -1,4 +1,4 @@
-FROM docker.io/library/rust:1.98.1-slim-trixie@sha256:8ce659250d9f7783105e69af45d78c0b2308bf78bd5640182986944efe3a4579 AS build
+FROM docker.io/library/rust:1.98.1-slim-trixie@sha256:b006de2a6c2d36ee0156a59777ba2ebb90e9266c1311ade0ac5508454d809736 AS build
 SHELL ["/usr/bin/bash", "-u", "-e", "-o", "pipefail", "-c"]
 WORKDIR /build
 
